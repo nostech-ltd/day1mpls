@@ -1,0 +1,48 @@
+set version 18.2R1.9
+set system login user andyh uid 2000
+set system login user andyh class super-user
+set system login user andyh authentication encrypted-password "$6$CkwELoDy$tmAdoiJmbvtGv.WV0Cz.Ym3vJD8IXnZYoW7yPn4g0kTPFAYcqwlSz.bduobtXLSMX2tAwuONpJMo.Rlr.ZMil0"
+set system root-authentication encrypted-password "$6$Hfij7LfH$htkyA1n5GgikxPo/PWL937Mf/mHOc5G.O6qkVn.NOENxeHZFlLNTxM2/s8Z44XvEsc.04bMb.VhXgqp4Sc28a."
+set system host-name NY
+set system services ssh
+set system services netconf ssh
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system processes dhcp-service traceoptions file dhcp_logfile
+set system processes dhcp-service traceoptions file size 10m
+set system processes dhcp-service traceoptions level all
+set system processes dhcp-service traceoptions flag packet
+set chassis fpc 0 lite-mode
+set interfaces ge-0/0/0 ether-options 802.3ad ae0
+set interfaces ge-0/0/1 description NY_2_CCS3
+set interfaces ge-0/0/2 description NY_2_CBS2
+set interfaces ge-0/0/2 unit 0 family inet address 100.64.0.0/31
+set interfaces ge-0/0/2 unit 0 family inet6 address 2001:9d8:ba5e:64::0/127
+set interfaces ge-0/0/4 description CO_2_NY
+set interfaces ge-0/0/4 unit 0 family inet address 198.51.100.13/31
+set interfaces ge-0/0/4 unit 0 family iso address 49.0002.0198.5101.0013.00
+set interfaces ge-0/0/4 unit 0 family inet6 address 2001:9d8:ba5e:1::13/127
+set interfaces ge-0/0/4 unit 0 family mpls
+set interfaces ge-0/0/5 description SJ_2_NY
+set interfaces ge-0/0/5 unit 0 family inet address 198.51.100.14/31
+set interfaces ge-0/0/5 unit 0 family iso address 49.0002.0198.5101.0014.00
+set interfaces ge-0/0/5 unit 0 family inet6 address 2001:9d8:ba5e:1::14/127
+set interfaces ge-0/0/5 unit 0 family mpls
+set interfaces ae0 aggregated-ether-options link-speed 100m
+set interfaces ae0 unit 0 family inet address 10.10.10.1/31
+set interfaces fxp0 unit 0 family inet address 10.100.1.7/24
+set interfaces lo0 unit 0 family inet address 192.0.2.5/24
+set interfaces lo0 unit 0 family iso address 49.0002.0192.0002.0005.00
+set interfaces lo0 unit 0 family inet6 address 2001:9d8:ba5e:1::5/128
+set protocols isis reference-bandwidth 1000g
+set protocols isis level 1 disable
+set protocols isis level 2 authentication-key "$9$n27g9tOhSeX7V1R7VwYZG69A"
+set protocols isis level 2 authentication-type md5
+set protocols isis level 2 wide-metrics-only
+set protocols isis interface ge-0/0/4.0 point-to-point
+set protocols isis interface ge-0/0/5.0 point-to-point
+set protocols isis interface lo0.0
+set protocols ldp interface ge-0/0/4.0
+set protocols ldp interface ge-0/0/5.0

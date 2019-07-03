@@ -1,0 +1,352 @@
+set version 18.2R1.9
+set groups apply-mpls-lsp protocols mpls label-switched-path <*> node-link-protection
+set system login user andyh uid 2000
+set system login user andyh class super-user
+set system login user andyh authentication encrypted-password "$1$llSNS1uE$3W6oGPZZKh64L56D8qgia."
+set system login user andyh authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZqlznevo015/jLLQl9GNa/rs9xGZur6rQjo14w8n7P1X/tEPeZXn1PmWsGQ6RYfN8IjfAATGhL3fgf2D0yqchW80X3QUzl9ty6r+EA3lXM5TvKESW0vDSOjod9IFsshFaxsJT2bZHrFuUJd8MTYMiKn7iWSk66xe3/lVH5RTru2P6l9F0Pw5UlNSCn8LKgaH13AHmLcqPc0nb/PdomF3TXYRh9kSUuWSQgRuhwgFxOnon3QZrfkwG4dG6SBga6p4YrDyAOpMRacSCN0WwQ3ucI+sT7seDLzGlmJllW2wXsLPpRo9iSkj5OGed5/t0DrtnrYoc22xZikx0XkaWNobz andyh@sid"
+set system login user ansible uid 2002
+set system login user ansible class super-user
+set system login user ansible authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDHVgqqufuSPwOSvc/oliSwgY9pwFMMdcE1ijRhoalcOu6kZCdG4Gfro4ZAXgqDajzUxfcI69k9vn2hMTrLMizNKus91Q8ZFKgkRjE7YQUP8YoVY1MUMtS2O4p+SjCIvxjLIpYQ95/Os5OPRJw/TG7EAG5osfjNXP5eI9vmMILoqw== root@sid"
+set system login user radiustest uid 2001
+set system login user radiustest class super-user
+set system login user radiustest authentication encrypted-password "$1$up1UyMuR$QRFCUI.jlziheR6f1UJp21"
+set system root-authentication encrypted-password "$1$HpQQ.3q5$yKWSoorHTRLI/2RNynPcZ0"
+set system host-name NE
+set system time-zone UTC
+set system default-address-selection
+set system no-redirects
+set system arp aging-timer 5
+set system arp purging
+set system arp gratuitous-arp-on-ifup
+set system internet-options path-mtu-discovery
+set system authentication-order radius
+set system radius-server 10.100.1.254 secret "$9$JyUjqP5FCA0GDqfz6u0KM8"
+set system radius-server 10.100.1.254 source-address 10.100.1.1
+set system services ssh
+set system services netconf ssh
+set system services web-management http interface fxp0.0
+deactivate system services web-management
+set system syslog user * any emergency
+set system syslog file messages any any
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system processes dhcp-service traceoptions file dhcp_logfile
+set system processes dhcp-service traceoptions file size 10m
+set system processes dhcp-service traceoptions level all
+set system processes dhcp-service traceoptions flag packet
+set chassis fpc 0 lite-mode
+set interfaces ge-0/0/1 description NE_2_CO
+set interfaces ge-0/0/1 unit 0 family inet address 198.51.100.4/31
+set interfaces ge-0/0/1 unit 0 family iso address 49.0002.0198.5101.0004.00
+set interfaces ge-0/0/1 unit 0 family inet6 address 2001:9d8:ba5e:1::4/127
+set interfaces ge-0/0/1 unit 0 family mpls
+set interfaces ge-0/0/2 description AT_2_NE
+set interfaces ge-0/0/2 unit 0 family inet address 198.51.100.3/31
+set interfaces ge-0/0/2 unit 0 family iso address 49.0002.0198.5101.0003.00
+set interfaces ge-0/0/2 unit 0 family inet6 address 2001:9d8:ba5e:1::3/127
+set interfaces ge-0/0/2 unit 0 family mpls
+set interfaces ge-0/0/3 description NE_2_SJ
+set interfaces ge-0/0/3 unit 0 family inet address 198.51.100.6/31
+set interfaces ge-0/0/3 unit 0 family iso address 49.0002.0198.5101.0006.00
+set interfaces ge-0/0/3 unit 0 family inet6 address 2001:9d8:ba5e:1::6/127
+set interfaces ge-0/0/3 unit 0 family mpls
+set interfaces ge-0/0/4 description NE_2_CBS1
+set interfaces ge-0/0/4 unit 0 family inet address 100.64.1.0/31
+set interfaces ge-0/0/4 unit 0 family inet6 address 2001:9d8:ba5e:64::0/127
+set interfaces ge-0/0/5 description NE_2_CAS2
+set interfaces ge-0/0/5 unit 0 family inet address 203.0.113.0/31
+set interfaces ge-0/0/5 unit 0 family inet6 address 2001:9d8:ba5e:113::0/127
+set interfaces fxp0 description Management
+set interfaces fxp0 unit 0 family inet address 10.100.1.5/24
+set interfaces fxp0 unit 0 family inet6 address 2000:9d8:ba5e:0::5/64
+set interfaces lo0 unit 0 family inet address 192.0.2.3/24
+set interfaces lo0 unit 0 family iso address 49.0002.0192.0002.0003.00
+set interfaces lo0 unit 0 family inet6 address 2001:9d8:ba5e:1::3/128
+set snmp community hopperlab authorization read-only
+set snmp community hopperlab clients 162.244.77.129/32
+set snmp trap-options source-address 5.5.5.5
+set snmp trap-group taggrp1 version v2
+set snmp trap-group taggrp1 categories authentication
+set snmp trap-group taggrp1 categories chassis
+set snmp trap-group taggrp1 categories link
+set snmp trap-group taggrp1 categories remote-operations
+set snmp trap-group taggrp1 categories routing
+set snmp trap-group taggrp1 categories startup
+set snmp trap-group taggrp1 categories rmon-alarm
+set snmp trap-group taggrp1 categories vrrp-events
+set snmp trap-group taggrp1 categories configuration
+set snmp health-monitor interval 120
+set snmp health-monitor rising-threshold 90
+set snmp health-monitor falling-threshold 50
+set event-options policy reclassify-as-warning events ui_commit
+set event-options policy reclassify-as-warning events ui_commit_completed
+set event-options policy reclassify-as-warning events ui_commit_confirmed_reminder
+set event-options policy reclassify-as-warning events ui_commit_not_confirmed
+set event-options policy reclassify-as-warning events vrrpd_new_backup
+set event-options policy reclassify-as-warning events vrrpd_new_master
+set event-options policy reclassify-as-warning events bfdd_trap_mhop_state_down
+set event-options policy reclassify-as-warning events bfdd_trap_mhop_state_up
+set event-options policy reclassify-as-warning events bfdd_trap_shop_state_down
+set event-options policy reclassify-as-warning events bfdd_trap_shop_state_up
+set event-options policy reclassify-as-warning events bfdd_trap_state_down
+set event-options policy reclassify-as-warning events bfdd_trap_state_up
+set event-options policy reclassify-as-warning events lldp_neighbor_down
+set event-options policy reclassify-as-warning events lldp_neighbor_up
+set event-options policy reclassify-as-warning events rpd_isis_adjdown
+set event-options policy reclassify-as-warning events rpd_isis_adjup
+set event-options policy reclassify-as-warning events rpd_l2vpn_remote_site_collision
+set event-options policy reclassify-as-warning events rpd_l2vpn_site_collision
+set event-options policy reclassify-as-warning events rpd_layer2_vc_down
+set event-options policy reclassify-as-warning events rpd_layer2_vc_up
+set event-options policy reclassify-as-warning events rpd_ospf_nbrdown
+set event-options policy reclassify-as-warning events rpd_ospf_nbrup
+set event-options policy reclassify-as-warning events rpd_rsvp_nbrdown
+set event-options policy reclassify-as-warning events rpd_rsvp_nbrup
+set event-options policy reclassify-as-warning events snmp_trap_link_down
+set event-options policy reclassify-as-warning events snmp_trap_link_up
+set event-options policy reclassify-as-warning then priority-override severity warning
+set event-options policy reclassify-as-informational events ui_dbase_login_event
+set event-options policy reclassify-as-informational events ui_dbase_logout_event
+set event-options policy reclassify-as-informational events ui_configuration_error
+set event-options policy reclassify-as-informational events ui_configuration_warning
+set event-options policy reclassify-as-informational events ui_load_event
+set event-options policy reclassify-as-informational events ui_login_event
+set event-options policy reclassify-as-informational events ui_logout_event
+set event-options policy reclassify-as-informational then priority-override severity info
+set routing-options router-id 5.5.5.5
+set routing-options autonomous-system 65510
+set routing-options forwarding-table export load-balance-per-packet
+set routing-options forwarding-table unicast-reverse-path feasible-paths
+set protocols rsvp interface ge-0/0/0.0
+set protocols rsvp interface ge-0/0/1.0
+set protocols rsvp interface ge-0/0/2.0
+set protocols rsvp interface ge-0/0/3.0
+set protocols mpls apply-groups apply-mpls-lsp
+set protocols mpls label-switched-path core5_to_core1 to 1.1.1.1
+set protocols mpls label-switched-path core5_to_core2 to 2.2.2.2
+set protocols mpls label-switched-path core5_to_core3 to 3.3.3.3
+set protocols mpls label-switched-path core5_to_core4 to 4.4.4.4
+set protocols mpls label-switched-path core5_to_core6 to 6.6.6.6
+set protocols mpls label-switched-path core5_to_core-pe7 to 7.7.7.7
+set protocols mpls label-switched-path core5_to_core-pe8 to 8.8.8.8
+set protocols mpls label-switched-path core5_to_core-pe9 to 9.9.9.9
+set protocols mpls label-switched-path core5_to_core-pe10 to 10.10.10.10
+set protocols mpls interface lo0.0
+set protocols mpls interface ge-0/0/0.0
+set protocols mpls interface ge-0/0/1.0
+set protocols mpls interface ge-0/0/2.0
+set protocols mpls interface ge-0/0/3.0
+set protocols bgp advertise-inactive
+set protocols bgp mtu-discovery
+set protocols bgp log-updown
+set protocols bgp local-as 65510
+set protocols bgp graceful-restart
+set protocols bgp group ibgp-ipv4-core type internal
+set protocols bgp group ibgp-ipv4-core local-address 5.5.5.5
+set protocols bgp group ibgp-ipv4-core import import-from-ibgp-ipv4
+set protocols bgp group ibgp-ipv4-core family inet unicast add-path receive
+set protocols bgp group ibgp-ipv4-core family inet unicast add-path send path-count 6
+set protocols bgp group ibgp-ipv4-core family inet-vpn unicast
+set protocols bgp group ibgp-ipv4-core family inet-vpn multicast
+set protocols bgp group ibgp-ipv4-core family inet6-vpn unicast
+set protocols bgp group ibgp-ipv4-core family inet6-vpn multicast
+set protocols bgp group ibgp-ipv4-core family l2vpn signaling
+set protocols bgp group ibgp-ipv4-core export export-into-ibgp-ipv4
+set protocols bgp group ibgp-ipv4-core peer-as 65510
+set protocols bgp group ibgp-ipv4-core neighbor 1.1.1.1 description core1
+set protocols bgp group ibgp-ipv4-core neighbor 2.2.2.2 description core2
+set protocols bgp group ibgp-ipv4-core neighbor 3.3.3.3 description core3
+set protocols bgp group ibgp-ipv4-core neighbor 4.4.4.4 description core4
+set protocols bgp group ibgp-ipv4-core neighbor 6.6.6.6 description core6
+set protocols bgp group ibgp-ipv4-core neighbor 7.7.7.7 description core-pe7
+set protocols bgp group ibgp-ipv4-core neighbor 8.8.8.8 description core-pe8
+set protocols bgp group ibgp-ipv4-core neighbor 9.9.9.9 description core-pe9
+set protocols bgp group ibgp-ipv4-core neighbor 10.10.10.10 description core-pe10
+deactivate protocols bgp group ibgp-ipv4-core
+set protocols bgp group ibgp-ipv6-core type internal
+set protocols bgp group ibgp-ipv6-core local-address 2001:9d8:ba5e:1::5
+set protocols bgp group ibgp-ipv6-core import import-from-ibgp-ipv6
+set protocols bgp group ibgp-ipv6-core family inet6 unicast
+set protocols bgp group ibgp-ipv6-core authentication-algorithm md5
+set protocols bgp group ibgp-ipv6-core export export-to-ibgp-ipv6
+set protocols bgp group ibgp-ipv6-core peer-as 65510
+set protocols bgp group ibgp-ipv6-core neighbor 2001:9d8:ba5e:1::1 description core1
+set protocols bgp group ibgp-ipv6-core neighbor 2001:9d8:ba5e:1::2 description core2
+set protocols bgp group ibgp-ipv6-core neighbor 2001:9d8:ba5e:1::3 description core3
+set protocols bgp group ibgp-ipv6-core neighbor 2001:9d8:ba5e:1::4 description core4
+set protocols bgp group ibgp-ipv6-core neighbor 2001:9d8:ba5e:1::6 description core6
+set protocols bgp group ibgp-ipv6-core neighbor 2001:9d8:ba5e:1::7 description core-pe7
+set protocols bgp group ibgp-ipv6-core neighbor 2001:9d8:ba5e:1::8 description core-pe8
+set protocols bgp group ibgp-ipv6-core neighbor 2001:9d8:ba5e:1::9 description core-pe9
+set protocols bgp group ibgp-ipv6-core neighbor 2001:9d8:ba5e:1::10 description core-pe10
+deactivate protocols bgp group ibgp-ipv6-core
+set protocols bgp group vrr-ibgp-ipv4-peers type internal
+set protocols bgp group vrr-ibgp-ipv4-peers local-address 5.5.5.5
+set protocols bgp group vrr-ibgp-ipv4-peers export send-isis
+set protocols bgp group vrr-ibgp-ipv4-peers export send-direct
+set protocols bgp group vrr-ibgp-ipv4-peers export send-ospf
+set protocols bgp group vrr-ibgp-ipv4-peers neighbor 11.11.11.11
+set protocols bgp group vrr-ibgp-ipv4-peers neighbor 12.12.12.12
+set protocols isis reference-bandwidth 1000g
+set protocols isis level 1 disable
+set protocols isis level 2 authentication-key "$9$n27g9tOhSeX7V1R7VwYZG69A"
+set protocols isis level 2 authentication-type md5
+set protocols isis level 2 wide-metrics-only
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols isis interface ge-0/0/3.0 point-to-point
+set protocols isis interface lo0.0
+set protocols ospf area 0.0.0.0 interface lo0.0 passive
+set protocols ospf area 0.0.0.0 interface ge-0/0/0.0
+set protocols ospf area 0.0.0.0 interface ge-0/0/1.0
+set protocols ospf area 0.0.0.0 interface ge-0/0/2.0
+set protocols ospf area 0.0.0.0 interface ge-0/0/3.0
+set protocols ldp deaggregate
+set protocols ldp interface ge-0/0/1.0
+set protocols ldp interface ge-0/0/2.0
+set protocols ldp interface ge-0/0/3.0
+set protocols lldp interface ge-0/0/0
+set protocols lldp interface ge-0/0/1
+set protocols lldp interface ge-0/0/2
+set protocols lldp interface ge-0/0/3
+set policy-options prefix-list bgp-peers apply-path "protocols bgp group <*> neighbor <*>"
+set policy-options prefix-list ntp-peers apply-path "system ntp server <*>"
+set policy-options prefix-list radius-servers apply-path "system radius-server <*>"
+set policy-options prefix-list dns-servers apply-path "system name-server <*>"
+set policy-options prefix-list snmp-clients apply-path "snmp community <*> clients <*>"
+set policy-options prefix-list router-attached-ipv4 apply-path "interfaces <*> unit <*> family inet address <*>"
+set policy-options prefix-list router-loopback-ipv4 apply-path "interfaces lo0 unit 0 family inet address <*>"
+set policy-options prefix-list link-local-ipv4 224.0.0.0/24
+set policy-options prefix-list link-all-routers-ipv4 224.0.0.2/32
+set policy-options prefix-list link-ospf-signalling-ipv4 224.0.0.5/32
+set policy-options prefix-list link-ospf-signalling-ipv4 224.0.0.6/32
+set policy-options prefix-list link-rsvp-signalling-ipv4 224.0.0.14/32
+set policy-options prefix-list link-vrrp-signalling-ipv4 224.0.0.18/32
+set policy-options prefix-list management-ipv4 10.100.1.0/24
+set policy-options prefix-list management-ipv4 84.45.85.80/28
+set policy-options prefix-list loopbacks-linknets-ipv4 1.1.1.0/24
+set policy-options prefix-list loopbacks-linknets-ipv4 2.2.2.0/24
+set policy-options prefix-list loopbacks-linknets-ipv4 3.3.3.0/24
+set policy-options prefix-list loopbacks-linknets-ipv4 4.4.4.0/24
+set policy-options prefix-list loopbacks-linknets-ipv4 5.5.5.0/24
+set policy-options prefix-list loopbacks-linknets-ipv4 6.6.6.0/24
+set policy-options prefix-list loopbacks-linknets-ipv4 7.7.7.0/24
+set policy-options prefix-list loopbacks-linknets-ipv4 8.8.8.0/24
+set policy-options prefix-list loopbacks-linknets-ipv4 9.9.9.0/24
+set policy-options prefix-list loopbacks-linknets-ipv4 10.10.10.0/24
+set policy-options policy-statement export-into-ibgp-ipv4 term set-next-hop-self then next-hop self
+set policy-options policy-statement export-into-ibgp-ipv4 term set-next-hop-self then next term
+set policy-options policy-statement export-into-ibgp-ipv4 term direct from protocol direct
+set policy-options policy-statement export-into-ibgp-ipv4 term direct then accept
+set policy-options policy-statement export-into-ibgp-ipv4 term static from protocol static
+set policy-options policy-statement export-into-ibgp-ipv4 term static then accept
+set policy-options policy-statement export-into-ibgp-ipv4 term igp from protocol ospf
+set policy-options policy-statement export-into-ibgp-ipv4 term igp from protocol isis
+set policy-options policy-statement export-into-ibgp-ipv4 term igp from route-filter 0.0.0.0/0 exact reject
+set policy-options policy-statement export-into-ibgp-ipv4 term igp then accept
+set policy-options policy-statement export-into-ibgp-ipv4 term aggregate from protocol aggregate
+set policy-options policy-statement export-into-ibgp-ipv4 term aggregate then accept
+set policy-options policy-statement export-to-ebgp-ipv4 term no-export-ipv4 from route-filter 203.0.113.0/24 orlonger
+set policy-options policy-statement export-to-ebgp-ipv4 term no-export-ipv4 from route-filter 224.0.0.0/4 orlonger
+set policy-options policy-statement export-to-ebgp-ipv4 term no-export-ipv4 from route-filter 240.0.0.0/4 orlonger
+set policy-options policy-statement export-to-ebgp-ipv4 term no-export-ipv4 then reject
+set policy-options policy-statement export-to-ebgp-ipv4 term set-normal-parms then metric 100
+set policy-options policy-statement export-to-ebgp-ipv4 term set-normal-parms then next term
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-local-addresses from community local-addresses-communities
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-local-addresses from route-filter 0.0.0.0/0 upto /24
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-local-addresses then next-hop self
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-local-addresses then accept
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-transit-full-addresses from community transit-full-communities
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-transit-full-addresses from route-filter 0.0.0.0/0 upto /24
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-transit-full-addresses then next-hop self
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-transit-full-addresses then accept
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-transit-partial-addresses from community transit-partial-communities
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-transit-partial-addresses from route-filter 0.0.0.0/0 upto /24
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-transit-partial-addresses then next-hop self
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-transit-partial-addresses then accept
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-london-tier1-addresses from community london-tier1-communities
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-london-tier1-addresses from route-filter 0.0.0.0/0 upto /24
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-london-tier1-addresses then next-hop self
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-london-tier1-addresses then accept
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-london-peering-addresses from community london-peering-communities
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-london-peering-addresses from route-filter 0.0.0.0/0 upto /24
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-london-peering-addresses then next-hop self
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-london-peering-addresses then accept
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-default-route from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-default-route then accept
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-route-filter from route-filter 66.66.66.66/32 exact
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-route-filter from route-filter 106.106.106.106/32 exact
+set policy-options policy-statement export-to-ebgp-ipv4 term accept-route-filter then accept
+set policy-options policy-statement export-to-ebgp-ipv4 term default-reject then reject
+set policy-options policy-statement export-to-ibgp-ipv4 term direct from protocol direct
+set policy-options policy-statement export-to-ibgp-ipv4 term direct then accept
+set policy-options policy-statement export-to-ibgp-ipv4 term static from protocol static
+set policy-options policy-statement export-to-ibgp-ipv4 term static then accept
+set policy-options policy-statement export-to-ibgp-ipv6 term set-next-hop-self then next term
+set policy-options policy-statement export-to-ibgp-ipv6 term direct from protocol direct
+set policy-options policy-statement export-to-ibgp-ipv6 term direct then accept
+set policy-options policy-statement export-to-ibgp-ipv6 term static from protocol static
+set policy-options policy-statement export-to-ibgp-ipv6 term static then accept
+set policy-options policy-statement export-to-ibgp-ipv6 term igp from protocol ospf3
+set policy-options policy-statement export-to-ibgp-ipv6 term igp from route-filter ::/0 exact reject
+set policy-options policy-statement export-to-ibgp-ipv6 term igp then accept
+set policy-options policy-statement export-to-ibgp-ipv6 term aggregate from protocol aggregate
+set policy-options policy-statement export-to-ibgp-ipv6 term aggregate then accept
+set policy-options policy-statement import-from-ebgp-ipv4 term no-import-ipv4 from route-filter 203.0.113.0/24 orlonger
+set policy-options policy-statement import-from-ebgp-ipv4 term no-import-ipv4 from route-filter 224.0.0.0/4 orlonger
+set policy-options policy-statement import-from-ebgp-ipv4 term no-import-ipv4 from route-filter 240.0.0.0/4 orlonger
+set policy-options policy-statement import-from-ebgp-ipv4 term no-import-ipv4 then reject
+set policy-options policy-statement import-from-ebgp-ipv4 term set-normal-parms then metric 100
+set policy-options policy-statement import-from-ebgp-ipv4 term set-normal-parms then local-preference 1000
+set policy-options policy-statement import-from-ebgp-ipv4 term set-normal-parms then community add transit-full-communities
+set policy-options policy-statement import-from-ebgp-ipv4 term set-normal-parms then next term
+set policy-options policy-statement import-from-ibgp-ipv4 term accept-everything then accept
+set policy-options policy-statement import-from-ibgp-ipv6 term accept-everything then accept
+set policy-options policy-statement load-balance-per-packet then load-balance per-packet
+set policy-options policy-statement reject-all-routes then reject
+set policy-options policy-statement send-direct term 2 from protocol direct
+set policy-options policy-statement send-direct term 2 then accept
+set policy-options policy-statement send-isis term 2 from protocol isis
+set policy-options policy-statement send-isis term 2 then accept
+set policy-options policy-statement send-ospf term 2 from protocol ospf
+set policy-options policy-statement send-ospf term 2 then accept
+set policy-options policy-statement send-static term 1 from protocol static
+set policy-options policy-statement send-static term 1 then accept
+set policy-options community gtt-blackhole-communities members 3257:2666
+set policy-options community hex89-antiddos-communities members 65510:60601
+set policy-options community linx-224-communities members 65510:21124
+set policy-options community linx-236-communities members 65510:21126
+set policy-options community local-addresses-communities members 65510:24000
+set policy-options community local-antiddos-communities members 65510:24337
+set policy-options community lonap-communities members 65510:21140
+set policy-options community london-peering-communities members 65510:21000
+set policy-options community london-tier1-communities members 65510:22000
+set policy-options community ntt-blackhole-communities members 2914:666
+set policy-options community thn-antiddos-communities members 65510:60600
+set policy-options community transit-all-communities members 65510:23000
+set policy-options community transit-full-communities members 65510:23010
+set policy-options community transit-partial-communities members 65510:23020
+set firewall policer limit-10mbps-l2policer logical-interface-policer
+set firewall policer limit-10mbps-l2policer if-exceeding bandwidth-limit 10m
+set firewall policer limit-10mbps-l2policer if-exceeding burst-size-limit 100k
+set firewall policer limit-10mbps-l2policer then discard
+set firewall policer limit-100mbps-l2policer logical-interface-policer
+set firewall policer limit-100mbps-l2policer if-exceeding bandwidth-limit 100m
+set firewall policer limit-100mbps-l2policer if-exceeding burst-size-limit 1m
+set firewall policer limit-100mbps-l2policer then discard
+set firewall policer limit-1gbps-l2policer logical-interface-policer
+set firewall policer limit-1gbps-l2policer if-exceeding bandwidth-limit 1g
+set firewall policer limit-1gbps-l2policer if-exceeding burst-size-limit 10m
+set firewall policer limit-1gbps-l2policer then discard
+set firewall policer allowed-traceroute-probes-ipv4-policer if-exceeding bandwidth-limit 256k
+set firewall policer allowed-traceroute-probes-ipv4-policer if-exceeding burst-size-limit 32k
+set firewall policer allowed-traceroute-probes-ipv4-policer then discard
+set firewall policer allowed-icmp-types-ipv4-policer if-exceeding bandwidth-limit 1m
+set firewall policer allowed-icmp-types-ipv4-policer if-exceeding burst-size-limit 128k
+set firewall policer allowed-icmp-types-ipv4-policer then discard
+set firewall policer tcp-state-flood-guard-ipv4-policer if-exceeding bandwidth-limit 512k
+set firewall policer tcp-state-flood-guard-ipv4-policer if-exceeding burst-size-limit 64k
+set firewall policer tcp-state-flood-guard-ipv4-policer then discard
+set firewall filter packet-mode term 1 from interface ge-0/0/0.0
+set firewall filter packet-mode term 1 then packet-mode
+set firewall filter packet-mode term 2 then accept
