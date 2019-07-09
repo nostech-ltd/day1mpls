@@ -1,4 +1,3 @@
-set version 18.2R1.9
 set groups apply-mpls-lsp protocols mpls label-switched-path <*> node-link-protection
 set system login user andyh uid 2000
 set system login user andyh class super-user
